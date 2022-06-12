@@ -9,10 +9,10 @@ window.addEventListener('DOMContentLoaded', () => {
       clearInterval(setTimer);
       text2.innerText = 'Updating...';
       const place = await window.api.refresh(true, latestId);
-      console.log(place);
       if (place.meow) return console.log('Meow! Id\'s were the same so no changes was made!');
       text0.innerText = 'Connected: ' + place.connected;
-      if (!place.id || !place.name || !place.owner) {
+      if (!place.id || place.id == 'none' || !place.name || !place.owner) {
+        text1.innerText = "Game: none";
         icon.setAttribute('style', 'display:none');
         latestId = 'disconnected';
       } else {
