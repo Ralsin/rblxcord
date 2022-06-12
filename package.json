@@ -1,6 +1,6 @@
 {
   "name": "rblxcord",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Roblox Rich Presense for Discord",
   "main": "main.js",
   "scripts": {
@@ -17,8 +17,7 @@
   "author": "Ralsi#9199 on Discord",
   "devDependencies": {
     "electron": "^19.0.3",
-    "electron-builder": "^23.0.3",
-    "electron-packager": "^15.5.1"
+    "electron-builder": "^23.0.3"
   },
   "dependencies": {
     "discord-rpc": "^4.0.1",

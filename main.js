@@ -1,26 +1,36 @@
 const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs')
 
 app.disableHardwareAcceleration();
 
-function refreshStats(id) {
-  const place = require('./src/js/getGame.js').refreshGame(id);
-  return place;
-}
 app.whenReady().then(() => {
   const mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, './src/js/preload.js'),
-      nodeIntegration: false,
-      nodeIntegrationInWorker: false
-    }
+      preload: path.join(__dirname, './src/js/preload.js')
+    },
+    show: false
   });
   let trayMenu = [];
   let cmp = '.';
   if (!app.isPackaged) {
     trayMenu = [
       { label: 'Show', click: () => { mainWindow.show() } },
+      {
+        label: 'Authorize', click: () => {
+          const roblo = new BrowserWindow({
+            autoHideMenuBar: true,
+            webPreferences: {
+              preload: path.join(__dirname, './src/js/authorizeRoblox.js')
+            }
+          })
+          roblo.loadURL('https://roblox.com')
+          const devtools2 = new BrowserWindow();
+          roblo.webContents.setDevToolsWebContents(devtools2.webContents);
+          roblo.webContents.openDevTools({ mode: 'detach' });
+        }
+      },
       {
         label: 'DevTools', click: () => {
           const devtools = new BrowserWindow();
@@ -35,8 +45,25 @@ app.whenReady().then(() => {
       { label: 'Show', click: () => { mainWindow.show() } },
       { label: 'Quit', click: () => { app.isQuiting = true; app.quit() } }
     ]
+    if (!require('fs').existsSync(app.getPath('appData') + '\\rblxcord\\robloxId')) {
+      trayMenu = [
+        { label: 'Show', click: () => { mainWindow.show() } },
+        {
+          label: 'Authorize', click: () => {
+            new BrowserWindow({
+              autoHideMenuBar: true,
+              webPreferences: {
+                preload: path.join(__dirname, './src/js/authorizeRoblox.js')
+              }
+            }).loadURL('https://roblox.com')
+          }
+        },
+        { label: 'Quit', click: () => { app.isQuiting = true; app.quit() } }
+      ]
+    }
     cmp = './resources/app.asar'
   }
+
   mainWindow.removeMenu();
   mainWindow.loadFile('./src/meow.html');
   mainWindow.hide();
@@ -56,7 +83,19 @@ app.whenReady().then(() => {
   });
   tray.on('click', () => { mainWindow.show() })
 
-  ipcMain.handle('refresh', refreshStats);
+  ipcMain.handle('refresh', (event, id) => {
+    const place = require('./src/js/getGame.js').refreshGame(id);
+    return place;
+  });
+  ipcMain.handle('setId', (event, id) => {
+    fs.writeFileSync(app.getPath('appData') + '\\rblxcord\\robloxId', id);
+    new BrowserWindow({
+      width: 400,
+      height: 200,
+      frame: false,
+      resizable: false
+    }).loadFile('./src/coolPopup.html')
+  });
 
   console.log('Meow.');
 })
