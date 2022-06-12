@@ -1,71 +1,92 @@
-// const client = new (require("easy-presence").EasyPresence)("983406322924023860");
-// let latestId = 'none';
-// let data = new Date();
-// let connected = false;
-
-// exports.refreshDiscord = async (placeJson) => {
-//   if (placeJson == 'none' && latestId != placeJson) {
-//     await client.setActivity(undefined);
-//     latestId = 'none';
-//     console.log('No activity... Meow!')
-//     return connected = false;
-//   } else if (!connected || latestId != placeJson.id && placeJson != 'none') {
-//     console.log('Setting activity... Meow!')
-//     data = new Date();
-//     await client.setActivity({
-//       details: placeJson.name,
-//       state: 'by ' + placeJson.owner.split('@')[1],
-//       assets: {
-//         large_image: placeJson.iconUrl,
-//         large_text: placeJson.id,
-//         //small_image: "small_image",
-//         //small_text: "small_text"
-//       },
-//       instance: true,
-//       timestamps: { start: data }
-//     });
-//     console.log(`${latestId} != ${placeJson.id}`)
-//     latestId = placeJson.id;
-//     connected = true;
-//   }
-//   return { connected: true }
-// }
-
-const RPC = require('discord-rpc');
-const client = new RPC.Client({ transport: 'ipc' });
-
-let latestId = 'none';
+const { Client } = require('discord-rpc')
+const { readFileSync, existsSync } = require('fs');
+const { app } = require('electron');
+const fetch = require('node-fetch')
+const { execSync } = require('child_process');
+let avatarUrl, userNames;
+let latestId;
 let data = new Date();
 let connected = false;
+async function updateProfile() {
+  const id = readFileSync(app.getPath('appData') + '\\rblxcord\\robloxId').toString();
+  const userFetch = await fetch('https://users.roblox.com/v1/users/' + id);
+  const user = await userFetch.json();
+  userNames = { nick: user.displayName, name: user.name };
+  const avatarFetch = await fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=60x60&format=Png`);
+  const avatar = await avatarFetch.json();
+  avatarUrl = avatar.data[0].imageUrl;
+}
+if (existsSync(app.getPath('appData') + '\\rblxcord\\robloxId')) updateProfile();
 
-exports.refreshDiscord = async (placeJson) => {
-  if (placeJson == 'none' && connected) {
-    await client.clearActivity();
-    latestId = 'none';
-    console.log('No activity... Meow!')
-    return connected = false;
-  } else if (!connected || (latestId != placeJson.id && placeJson != 'none')) {
-    console.log('Setting activity... Meow!')
-    data = new Date();
-    await client.setActivity({
-      details: placeJson.name,
-      state: 'by ' + (placeJson.owner.split('@')[1] || placeJson.owner),
-      largeImageKey: placeJson.iconUrl,
-      largeImageText: placeJson.id,
-      //small_image: "small_image",
-      //small_text: "small_text"
-      //instance: true,
-      startTimestamp: data
+let Rblxcord;
+class RblxcordCon {
+  client;
+  isReady = false;
+  constructor(clientId) {
+    this.client = new Client({ transport: 'ipc' })
+    this.client.once('ready', () => {
+      console.log('[DRP] Connected! Meow!');
+      this.isReady = true;
     });
-    console.log(`${latestId} != ${placeJson.id}`)
-    latestId = placeJson.id;
-    connected = true;
+    this.client.login({ clientId }).catch(() => { this.destroy() })
   }
-  return { connected: true }
+  async setActivity(activity) {
+    if (!this.isReady) return false;
+    await this.client.setActivity(activity);
+    return true;
+  }
+  async clearActivity() {
+    await this.client.clearActivity()
+  }
+  async destroy() {
+    try {
+      console.log('boom!');
+      if (this.isReady) {
+        this.client.clearActivity();
+        this.client.destroy();
+      }
+    } catch (err) { }
+  }
 }
 
-client.on('ready', () => {
-  console.log('[DRP] Connected! Meow!')
-});
-
-client.login({ clientId: "983406322924023860" });
+exports.refreshDiscord = async (placeJson) => {
+  if (!Rblxcord?.isReady) {
+    Rblxcord?.destroy()
+    Rblxcord = new RblxcordCon('983406322924023860');
+  }
+  if (placeJson == 'none' && connected) {
+    await Rblxcord.clearActivity();
+    latestId = placeJson.id;
+    console.log('[DRP] No activity... Meow!');
+    connected = false;
+    return false;
+  } else if (!connected || (latestId != placeJson.id && latestId != undefined && placeJson != 'none')) {
+    console.log('[DRP] Setting activity... Meow!');
+    data = new Date();
+    let activity;
+    if (userNames) {
+      activity = {
+        details: placeJson.name,
+        state: 'by ' + (placeJson.owner?.split('@')[1] || placeJson.owner),
+        largeImageKey: placeJson.iconUrl,
+        largeImageText: placeJson.id,
+        smallImageKey: avatarUrl,
+        smallImageText: `${userNames?.nick} (@${userNames?.name})`,
+        startTimestamp: data
+      }
+    } else {
+      activity = {
+        details: placeJson.name,
+        state: 'by ' + (placeJson.owner.split('@')[1] || placeJson.owner),
+        largeImageKey: placeJson.iconUrl,
+        largeImageText: placeJson.id,
+        startTimestamp: data
+      }
+    }
+    const activitySet = await Rblxcord.setActivity(activity);
+    console.log(`${latestId} != ${placeJson.id}`);
+    connected = activitySet;
+    if (connected) latestId = placeJson.id;
+    return connected;
+  }
+}
