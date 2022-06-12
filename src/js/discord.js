@@ -20,47 +20,47 @@ if (existsSync(app.getPath('appData') + '\\rblxcord\\robloxId')) updateProfile()
 
 let Rblxcord;
 class RblxcordCon {
+  clientId;
   client;
   isReady = false;
   constructor(clientId) {
-    this.client = new Client({ transport: 'ipc' })
+    this.clientId = clientId;
+    this.client = new Client({ transport: 'ipc' });
     this.client.once('ready', () => {
       console.log('[DRP] Connected! Meow!');
       this.isReady = true;
     });
-    this.client.login({ clientId }).catch(() => { this.destroy() })
+    this.client.connect(this.clientId).catch(console.log);
+    this.client.login({ clientId: this.clientId }).catch(() => { this.destroy(); setTimeout(() => { Rblxcord = new RblxcordCon('983406322924023860'); }, 10e3) });
   }
-  async setActivity(activity) {
+  setActivity(activity) {
     if (!this.isReady) return false;
-    await this.client.setActivity(activity);
+    this.client.setActivity(activity);
     return true;
   }
-  async clearActivity() {
-    await this.client.clearActivity()
+  clearActivity() {
+    this.client.clearActivity()
   }
-  async destroy() {
+  destroy() {
     try {
-      console.log('boom!');
       if (this.isReady) {
         this.client.clearActivity();
         this.client.destroy();
       }
-    } catch (err) { }
+      console.log('boom!');
+    } catch (e) { }
   }
 }
+Rblxcord = new RblxcordCon('983406322924023860');
 
 exports.refreshDiscord = async (placeJson) => {
-  if (!Rblxcord?.isReady) {
-    Rblxcord?.destroy()
-    Rblxcord = new RblxcordCon('983406322924023860');
-  }
   if (placeJson == 'none' && connected) {
-    await Rblxcord.clearActivity();
+    Rblxcord.clearActivity();
     latestId = placeJson.id;
     console.log('[DRP] No activity... Meow!');
     connected = false;
     return false;
-  } else if (!connected || (latestId != placeJson.id && latestId != undefined && placeJson != 'none')) {
+  } else if (!connected && Rblxcord?.isReady || (latestId != placeJson.id && latestId != undefined && placeJson != 'none')) {
     console.log('[DRP] Setting activity... Meow!');
     data = new Date();
     let activity;
@@ -83,10 +83,10 @@ exports.refreshDiscord = async (placeJson) => {
         startTimestamp: data
       }
     }
-    const activitySet = await Rblxcord.setActivity(activity);
+    const activitySet = Rblxcord.setActivity(activity);
     console.log(`${latestId} != ${placeJson.id}`);
     connected = activitySet;
     if (connected) latestId = placeJson.id;
     return connected;
-  }
+  } else return false;
 }
