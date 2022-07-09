@@ -6,7 +6,7 @@
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
-    "test": "electron .",
+    "run": "electron .",
     "build": "electron-builder build"
   },
   "keywords": [

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap");
 body {
   margin: 0;
   display: flex;
@@ -23,7 +23,7 @@ body {
 span {
   margin: auto;
   color: white;
-  font-family: 'Quicksand';
+  font-family: "Quicksand";
   font-size: 28px;
 }
 #button-confirm {

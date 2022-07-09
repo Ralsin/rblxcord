@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap");
 
 body {
   margin: 0;
@@ -27,7 +27,7 @@ body {
 span {
   margin: auto;
   color: white;
-  font-family: 'Quicksand';
+  font-family: "Quicksand";
 }
 img {
   width: 100px;
