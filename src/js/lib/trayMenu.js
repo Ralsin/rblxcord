@@ -23,8 +23,6 @@ function createMenu(app, mainWindow) {
     "rblxcord/robloxId"
   );
 
-  console.log("RESOLVE", robloxIdPath);
-
   if (!app.isPackaged) {
     return {
       menuButtons: menuFromDefault([
@@ -32,25 +30,25 @@ function createMenu(app, mainWindow) {
         DevToolsButton(mainWindow),
       ]),
 
-      icon: resolveIcon("."),
+      icon: ".",
     };
   } else if (!existsSync(robloxIdPath)) {
     return {
       menuButtons: menuFromDefault([AuthorizeButton()]),
-      icon: resolveIcon("./resources/app.asar"),
-    };
-  } else {
-    return {
-      menuButtons: menuFromDefault(),
-      icon: resolveIcon("./resources/app.asar"),
+      icon: "./resources/app.asar",
     };
   }
+
+  return {
+    menuButtons: menuFromDefault(),
+    icon: "./resources/app.asar",
+  };
 }
 
 function createTray(app, mainWindow) {
   const { menuButtons, icon } = createMenu(app, mainWindow);
 
-  const tray = new Tray(path.resolve(icon, "./src/media/rblxcord.png"));
+  const tray = new Tray(resolveIcon(icon));
   const menu = Menu.buildFromTemplate(menuButtons);
 
   tray.setToolTip("Rblxcord");

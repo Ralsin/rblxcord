@@ -22,7 +22,7 @@ function createWindow() {
     show: false,
 
     webPreferences: {
-      preload: path.join(__dirname, "./preload.js"),
+      preload: path.resolve(__dirname, "./preload.js"),
     },
   });
 
@@ -47,7 +47,7 @@ function createWindow() {
 }
 
 app.on("ready", createWindow);
-app.on("window-all-closed", () => app.quit());
+app.on("window-all-closed", app.quit);
 
 app.on("activate", () => {
   if (!mainWindow) createWindow();

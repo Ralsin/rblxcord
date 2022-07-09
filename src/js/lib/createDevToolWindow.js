@@ -1,3 +1,5 @@
+const { BrowserWindow } = require("electron");
+
 function createDevToolWindow(window) {
   const devtools = new BrowserWindow();
 
