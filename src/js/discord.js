@@ -13,7 +13,8 @@ async function getFromUrl(url) {
 }
 async function updateProfile() {
   const id = readFileSync(
-    app.getPath("appData") + "\\rblxcord\\robloxId"
+    app.getPath("appData") + "\\rblxcord\\robloxId",
+    "utf-8"
   ).toString();
   const user = await getFromUrl("https://users.roblox.com/v1/users/" + id);
   userNames = { nick: user.displayName, name: user.name };

@@ -23,7 +23,7 @@ function AuthorizeButton(callback) {
     const authWindow = new BrowserWindow({
       autoHideMenuBar: true,
       webPreferences: {
-        preload: path.resolve(__dirname, "./authorizeRoblox.js"),
+        preload: path.resolve(__dirname, "../frontend/authorizeRoblox.js"),
       },
     });
 

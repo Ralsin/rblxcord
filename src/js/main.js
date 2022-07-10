@@ -7,7 +7,7 @@ const { refreshGame } = require("./getGame");
 
 app.disableHardwareAcceleration();
 
-let mainWindow;
+let mainWindow, tray;
 
 function hideWindow(event) {
   if (!mainWindow) return;
@@ -26,10 +26,12 @@ function createWindow() {
     },
   });
 
-  const tray = createTray(app, mainWindow);
+  if (tray) tray.destroy();
+
+  tray = createTray(app, mainWindow);
 
   mainWindow.removeMenu();
-  mainWindow.loadFile("../meow.html");
+  mainWindow.loadFile("../pages/meow.html");
   mainWindow.hide();
 
   mainWindow.on("minimize", hideWindow);
@@ -55,12 +57,17 @@ app.on("activate", () => {
 
 ipcMain.handle("refresh", (event, id) => refreshGame(id));
 ipcMain.handle("setId", (event, id) => {
-  fs.writeFileSync(app.getPath("appData") + "\\rblxcord\\robloxId", id);
+  const robloxIdPath = path.resolve(
+    app.getPath("appData"),
+    "rblxcord/robloxId"
+  );
+
+  fs.writeFileSync(robloxIdPath, id, "utf-8");
 
   new BrowserWindow({
     width: 400,
     height: 200,
     frame: false,
     resizable: false,
-  }).loadFile("../coolPopup.html");
+  }).loadFile("../pages/coolPopup.html");
 });
