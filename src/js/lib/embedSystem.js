@@ -7,7 +7,8 @@ const fetchJSON = require("./fetchJSON");
 
 const robloxIdPath = path.resolve(app.getPath("appData"), "rblxcord/robloxId");
 
-let avatarUrl, userNames;
+let avatarUrl;
+let userNames;
 
 async function updateProfile() {
   const id = readFileSync(robloxIdPath, "utf-8");
@@ -30,6 +31,7 @@ let Rblxcord;
 
 class RblxcordCon {
   client;
+
   isReady = false;
 
   constructor(clientId) {
@@ -74,7 +76,11 @@ class RblxcordCon {
       }
 
       console.log("boom!");
-    } catch (e) {}
+    } catch (e) {
+      return false;
+    }
+
+    return false;
   }
 }
 
@@ -86,7 +92,7 @@ function createActivity(placeInfo) {
   if (placeInfo.name) {
     activity = {
       details: placeInfo.name,
-      state: "by " + (placeInfo.owner.split("@")[1] || placeInfo.owner),
+      state: `by ${placeInfo.owner.split("@")[1] || placeInfo.owner}`,
       largeImageKey: placeInfo.iconUrl,
       largeImageText: placeInfo.name,
       startTimestamp,
@@ -102,6 +108,10 @@ function createActivity(placeInfo) {
   }
 
   return activity;
+}
+
+function isConnected() {
+  return Rblxcord && Rblxcord.isReady;
 }
 
 //! Token steal vulnerability!
@@ -122,12 +132,12 @@ function clearActivity() {
 }
 
 async function refreshDiscord(placeInfo) {
-  if (connected && placeInfo == "none") return clearActivity();
+  if (connected && placeInfo === "none") return clearActivity();
 
-  if (Rblxcord && Rblxcord.isReady && latestId != placeInfo.id) {
+  if (Rblxcord && Rblxcord.isReady && latestId !== placeInfo.id) {
     console.log("[DRP] Setting activity... Meow!");
 
-    let activity = createActivity(placeInfo);
+    const activity = createActivity(placeInfo);
 
     if (!activity) return clearActivity();
 
@@ -141,10 +151,8 @@ async function refreshDiscord(placeInfo) {
       return true;
     }
   }
-}
 
-function isConnected() {
-  return Rblxcord && Rblxcord.isReady;
+  return undefined;
 }
 
 module.exports = { isConnected, refreshDiscord };

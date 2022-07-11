@@ -7,11 +7,13 @@ body {
   flex-direction: column;
   background-color: #334;
 }
+
 #center {
   margin: auto;
   display: flex;
   flex-direction: column;
 }
+
 #meow {
   margin: auto;
   display: flex;
@@ -24,11 +26,13 @@ body {
   font-size: 24px;
   text-align: center;
 }
+
 span {
   margin: auto;
   color: white;
   font-family: "Quicksand";
 }
+
 img {
   width: 100px;
   height: 100px;

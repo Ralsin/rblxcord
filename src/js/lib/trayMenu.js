@@ -1,4 +1,5 @@
 const { Tray, Menu } = require("electron");
+const { existsSync } = require("fs");
 const path = require("path");
 
 const createDevToolWindow = require("./createDevToolWindow");
@@ -32,7 +33,9 @@ function createMenu(app, mainWindow) {
 
       icon: ".",
     };
-  } else if (!existsSync(robloxIdPath)) {
+  }
+
+  if (!existsSync(robloxIdPath)) {
     return {
       menuButtons: menuFromDefault([AuthorizeButton()]),
       icon: "./resources/app.asar",

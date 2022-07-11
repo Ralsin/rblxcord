@@ -33,7 +33,7 @@ const { Client } = require("discord-rpc");
 //     } catch (e) { }
 //   }
 // }
-//let Rblxcord = new RblxcordCon('983406322924023860').create();
-let client = new Client({ transport: "ipc" });
+// let Rblxcord = new RblxcordCon('983406322924023860').create();
+const client = new Client({ transport: "ipc" });
 //! Token steal vulnerability!
 client.login({ clientId: "983406322924023860" }).catch(console.log);

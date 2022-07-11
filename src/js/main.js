@@ -7,7 +7,8 @@ const { refreshGame } = require("./lib/getGame");
 
 app.disableHardwareAcceleration();
 
-let mainWindow, tray;
+let mainWindow;
+let tray;
 
 function hideWindow(event) {
   if (!mainWindow) return;

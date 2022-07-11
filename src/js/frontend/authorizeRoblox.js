@@ -1,7 +1,7 @@
 const { ipcRenderer } = require("electron");
 
 async function onLoad() {
-  const { pathname } = location;
+  const { pathname } = window.location;
 
   if (pathname === "/home") {
     const [profile] = document.getElementsByClassName(

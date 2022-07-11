@@ -14,8 +14,8 @@ function getPlaceId() {
 }
 
 async function getGameInfo(id, prevId) {
-  if (id == prevId) return { meow: true };
-  if (id == "none") return { id: "none", connected: isConnected() };
+  if (id === prevId) return { meow: true };
+  if (id === "none") return { id: "none", connected: isConnected() };
 
   const { Name, Builder } = await fetchJSON(
     `https://www.roblox.com/places/api-get-details?assetId=${id}`

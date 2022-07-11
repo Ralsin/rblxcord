@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap");
+
 body {
   margin: 0;
   display: flex;
@@ -6,11 +7,13 @@ body {
   flex-direction: column;
   background-color: #334;
 }
+
 #center {
   margin: auto;
   display: flex;
   flex-direction: column;
 }
+
 #meow {
   margin: auto;
   display: flex;
@@ -20,15 +23,18 @@ body {
   background-color: #0005;
   text-align: center;
 }
+
 span {
   margin: auto;
   color: white;
   font-family: "Quicksand";
   font-size: 28px;
 }
+
 #button-confirm {
   cursor: pointer;
 }
+
 #button-confirm:hover {
   text-decoration: underline;
   color: #ffffaa;

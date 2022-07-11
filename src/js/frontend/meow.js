@@ -1,4 +1,4 @@
-let setTimer;
+/* eslint-disable no-undef */
 let timer = 1;
 let latestId = "none";
 
@@ -7,6 +7,7 @@ const UPDATE_INTERVAL = 1005;
 
 async function tick() {
   timer -= 1;
+
   text2.innerText = `Updates in ${timer} sec`;
 
   if (timer < 1) {
@@ -18,9 +19,9 @@ async function tick() {
       return console.log("Meow! Id's were the same so no changes was made!");
     }
 
-    text0.innerText = "Connected: " + place.connected;
+    text0.innerText = `Connected: ${place.connected}`;
 
-    if (!place.id || place.id == "none" || !place.name || !place.owner) {
+    if (!place.id || place.id === "none" || !place.name || !place.owner) {
       text1.innerText = "Game: none";
 
       icon.setAttribute("style", "display:none");
@@ -37,6 +38,8 @@ async function tick() {
 
     timer = RICH_INTERVAL;
   }
+
+  return undefined;
 }
 
 window.addEventListener("DOMContentLoaded", () => {
