@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 const createTray = require("./lib/trayMenu");
-const { refreshGame } = require("./getGame");
+const { refreshGame } = require("./lib/getGame");
 
 app.disableHardwareAcceleration();
 
@@ -55,7 +55,7 @@ app.on("activate", () => {
   if (!mainWindow) createWindow();
 });
 
-ipcMain.handle("refresh", (event, id) => refreshGame(id));
+ipcMain.handle("refresh", (event, id) => refreshGame(app, id));
 ipcMain.handle("setId", (event, id) => {
   const robloxIdPath = path.resolve(
     app.getPath("appData"),
