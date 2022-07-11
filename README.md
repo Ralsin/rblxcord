@@ -1,6 +1,8 @@
-<a href="https://github.com/Ralsin/rblxcord">
-  <img style="display: flex; margin: 0 auto 3rem auto; width: 150px;" alt="Project logo" src="https://raw.githubusercontent.com/Ralsin/rblxcord/main/src/media/rblxcord.png" />
-</a>
+<center>
+  <a href="https://github.com/Ralsin/rblxcord">
+    <img style="width: 150px;" alt="Project logo" src="https://raw.githubusercontent.com/Ralsin/rblxcord/main/src/media/rblxcord.png" />
+  </a>
+</center>
 
 # Roblox Rich Presence - Rblxcord
 
@@ -17,7 +19,7 @@ These steps to build the application require downloading the repository.
 git clone https://github.com/Ralsin/rblxcord.git
 ```
 
-### 2. Specify the id of your discord application *(this action is necessary for all subsequent ones)*
+### 2. Specify the id of your discord application _(this action is necessary for all subsequent ones)_
 
 Rename `.env.scheme` to `.env`
 
@@ -41,7 +43,7 @@ npm run build # for build running application
 ### 4. Application usage
 
 The application will immediately start in the tray, if you are running the application for the first time, select `Authorize`.
- Then restart the application and then select `Show`.
+Then restart the application and then select `Show`.
 
 Enter any Roblox game, app will automatically detect a found game.
 
