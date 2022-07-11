@@ -20,6 +20,7 @@ module.exports = {
     "class-methods-use-this": "off",
     "import/no-extraneous-dependencies": "off",
     "node/no-unpublished-require": "off",
+    "node/no-extraneous-require": "off",
     "no-param-reassign": "off",
   },
 };

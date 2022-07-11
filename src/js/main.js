@@ -2,6 +2,8 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs");
 
+require("dotenv").config();
+
 const createTray = require("./lib/trayMenu");
 const { refreshGame } = require("./lib/getGame");
 

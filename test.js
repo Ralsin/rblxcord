@@ -1,5 +1,7 @@
 const { Client } = require("discord-rpc");
 
+require("dotenv").config();
+
 // class RblxcordCon {
 //   clientId;
 //   client;
@@ -36,4 +38,4 @@ const { Client } = require("discord-rpc");
 // let Rblxcord = new RblxcordCon('983406322924023860').create();
 const client = new Client({ transport: "ipc" });
 //! Token steal vulnerability!
-client.login({ clientId: "983406322924023860" }).catch(console.log);
+client.login({ clientId: process.env.clientId }).catch(console.log);

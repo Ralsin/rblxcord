@@ -46,8 +46,7 @@ class RblxcordCon {
       this.destroy();
 
       setTimeout(() => {
-        //! Token steal vulnerability!
-        Rblxcord = new RblxcordCon("995025874296504401");
+        Rblxcord = new RblxcordCon(process.env.clientId);
       }, 10e3);
     });
 
@@ -114,8 +113,7 @@ function isConnected() {
   return Rblxcord && Rblxcord.isReady;
 }
 
-//! Token steal vulnerability!
-Rblxcord = new RblxcordCon("995025874296504401");
+Rblxcord = new RblxcordCon(process.env.clientId);
 
 let connected = false;
 let latestId = "none";
