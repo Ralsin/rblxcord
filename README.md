@@ -1,8 +1,6 @@
-<center>
-  <a href="https://github.com/Ralsin/rblxcord">
-    <img style="width: 150px;" alt="Project logo" src="https://raw.githubusercontent.com/Ralsin/rblxcord/main/src/media/rblxcord.png" />
-  </a>
-</center>
+<a style="display: flex; width: 100%" href="https://github.com/Ralsin/rblxcord">
+  <img style="width: 150px; margin: auto;" alt="Project logo" src="https://raw.githubusercontent.com/Ralsin/rblxcord/main/src/media/rblxcord.png" />
+</a>
 
 # Roblox Rich Presence - Rblxcord
 
