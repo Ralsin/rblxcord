@@ -21,6 +21,7 @@ async function updateProfile() {
 if (existsSync(app.getPath('appData') + '\\rblxcord\\robloxId')) updateProfile();
 
 let Rblxcord;
+let dumbLoop;
 class RblxcordCon {
   client;
   isReady = false;
@@ -30,7 +31,11 @@ class RblxcordCon {
       console.log('[DRP] Connected! Meow!');
       this.isReady = true;
     });
-    this.client.login({ clientId }).catch(() => { this.destroy(); setTimeout(() => { Rblxcord = new RblxcordCon('983406322924023860'); }, 10e3) });
+    this.client.once('disconnected', () => {
+      console.log('[DRP] Discord client was disconnected! Meow!');
+      this.destroy();
+    });
+    this.client.login({ clientId }).catch(() => { this.destroy(); });
   }
   setActivity(activity) {
     if (!this.isReady) return false;
@@ -48,13 +53,15 @@ class RblxcordCon {
         this.client.destroy();
       }
       console.log('boom!');
+      clearTimeout(dumbLoop);
+      dumbLoop = setTimeout(() => { Rblxcord = new RblxcordCon('983406322924023860'); }, 5000);
     } catch (e) { }
   }
 }
 Rblxcord = new RblxcordCon('983406322924023860');
 
 exports.refreshDiscord = async (placeJson) => {
-  if (connected && placeJson == 'none') {
+  if (connected && placeJson.id == 'none') {
     Rblxcord.clearActivity();
     latestId = 'none';
     console.log('[DRP] No activity... Meow!');
@@ -62,7 +69,7 @@ exports.refreshDiscord = async (placeJson) => {
     if (Rblxcord?.isReady) {
       return Rblxcord.isReady
     } else return false;
-  } else if (Rblxcord?.isReady && latestId != placeJson.id) {
+  } else if (Rblxcord?.isReady && latestId != placeJson.id && placeJson.id != 'none') {
     console.log('[DRP] Setting activity... Meow!');
     data = new Date();
     let activity;

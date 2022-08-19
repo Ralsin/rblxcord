@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
         icon.removeAttribute('style');
         latestId = place.id;
       }
-      timer = 16;
+      timer = 11;
       setTimer = setInterval(() => {
         tick()
       }, 1005)

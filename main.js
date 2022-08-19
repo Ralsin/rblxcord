@@ -8,7 +8,8 @@ app.whenReady().then(() => {
   const mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, './src/js/preload.js')
+      preload: path.join(__dirname, './src/js/preload.js'),
+      backgroundThrottling: false
     },
     show: false
   });
