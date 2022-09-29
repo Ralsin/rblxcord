@@ -1,7 +1,8 @@
 # Rblxcord - Discord Rich Presense for Roblox
 Simple app to show what you're playing in [Roblox](https://roblox.com/) to [Discord](https://discord.com/).  
 You can download it [here](https://github.com/Ralsin/rblxcord/releases/latest) or build yourself with the instructions below.  
-Currently supports only Windows platform.
+Currently supports only Windows platform.  
+<ins>**NOT COMPATIBLE WITH NEW ROBLOX LAUNCHER**<ins/>
 ## How To Build
 Install node.js from [here](https://nodejs.org/en/). Then open the command line and type in:
 ```
