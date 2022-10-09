@@ -1,8 +1,18 @@
-# Rblxcord - Discord Rich Presense for Roblox
+<p align="center"><img src="https://raw.githubusercontent.com/Ralsin/rblxcord/main/build/icon.png" alt="Rblxcord" width="256"></p>
+<h1 align="center">Rblxcord - Discord Rich Presense for Roblox</h1>
+
 Simple app to show what you're playing in [Roblox](https://roblox.com/) to [Discord](https://discord.com/).  
-You can download it [here](https://github.com/Ralsin/rblxcord/releases/latest) or build yourself with the instructions below.  
 Currently supports only Windows platform.  
-<ins>**NOT COMPATIBLE WITH NEW ROBLOX LAUNCHER**<ins/>
+You can download it [here](https://github.com/Ralsin/rblxcord/releases/latest) or build yourself with the instructions below.  
+<ins>**NOT COMPATIBLE WITH NEW ROBLOX LAUNCHER**</ins> (yet)  
+
+<p align="center">
+  <a align="center" href="https://discord.com/invite/7VJTar7mSU">
+    <img src="https://discordapp.com/api/guilds/921523680390033408/embed.png?style=banner2" alt="Discord Server" style="max-width: 100%">
+  </a>
+  <p align="center">Join our silly community :)</p>
+</p>
+
 ## How To Build
 Install node.js from [here](https://nodejs.org/en/). Then open the command line and type in:
 ```
