@@ -129,3 +129,5 @@ dist
 
 # rblxcord stuff, wawa
 build/test
+build/index.js.map
+build/index.js
