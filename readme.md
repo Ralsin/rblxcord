@@ -10,7 +10,7 @@ You can download it [here](https://github.com/Ralsin/rblxcord/releases/latest) o
   <a align="center" href="https://discord.com/invite/7VJTar7mSU">
     <img src="https://discordapp.com/api/guilds/921523680390033408/embed.png?style=banner2" alt="Discord Server" style="max-width: 100%">
   </a>
-  <p align="center">Join our silly community :)</p>
+  <p align="center">Join our silly community and report bugs/errors here :)</p>
 </p>
 
 ## How To Build

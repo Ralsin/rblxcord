@@ -1,11 +1,11 @@
 {
   "name": "rblxcord",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "main": "build/index.js",
   "description": "Discord Rich Presense for Roblox",
   "scripts": {
     "test": "npx tsc && electron ./build/index.js",
-    "build": "electron-builder build",
+    "build": "npx tsc && electron-builder build",
     "start": "electron ./build/index.js",
     "check": "npx asar extract ./dist/win-unpacked/resources/app.asar ./build/test"
   },
@@ -13,19 +13,27 @@
   "devDependencies": {
     "@types/discord-rpc": "^4.0.3",
     "@types/node-fetch": "^2.6.2",
-    "electron": "^20.2.0",
-    "electron-builder": "^23.3.3"
+    "electron": "^20.3.4",
+    "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "discord-rpc": "^4.0.1",
     "node-fetch": "^2.6.7"
   },
   "build": {
-    "appId": "com.ralsi.rblxcord",
+    "appId": "electron.app.rblxcord",
     "compression": "maximum",
     "asar": true,
     "executableName": "rblxcord",
     "copyright": "Ralsi",
-    "files": ["build", "!build/icon.png", "!**/*.ts", "!tsconfig.json"]
+    "files": [
+      "build",
+      "!build/icon.png",
+      "!build/afterPack.js",
+      "!**/*.ts",
+      "!tsconfig.json"
+    ],
+    "afterPack": "./build/afterPack.js",
+    "afterAllArtifactBuild": "./build/afterBuild.js"
   }
 }
